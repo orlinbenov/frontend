@@ -1,0 +1,52 @@
+<div class="jumbotron text-center">
+	<h1>Home Page</h1>
+
+	<div ng-controller="mainController as ctrl" ng-cloak>
+		<md-content class="md-padding">
+			<form ng-submit="$event.preventDefault()">
+				<md-autocomplete
+						md-no-cache="ctrl.noCache"
+						md-selected-item="ctrl.selectedItem"
+						md-search-text="ctrl.searchFName"
+						md-items="item in ctrl.querySearch(ctrl.searchFName, true)"
+						md-item-text="item.fname"
+						md-min-length="0"
+						placeholder="First Name">
+					<md-item-template>
+						<span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.fname}} {{item.lname}}</span>
+					</md-item-template>
+					<md-not-found>
+						No employees matching "{{ctrl.searchFName}}" were found.
+					</md-not-found>
+				</md-autocomplete>
+
+				<md-autocomplete
+						md-no-cache="ctrl.noCache"
+						md-selected-item="ctrl.selectedItem"
+						md-search-text="ctrl.searchLName"
+						md-items="item in ctrl.querySearch(ctrl.searchLName, false)"
+						md-item-text="item.lname"
+						md-min-length="0"
+						placeholder="Surname">
+					<md-item-template>
+						<span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.fname}} {{item.lname}}</span>
+					</md-item-template>
+					<md-not-found>
+						No employees matching "{{ctrl.searchLName}}" were found.
+					</md-not-found>
+				</md-autocomplete>
+			</form>
+		</md-content>
+
+		<div class="summary-wrapper" ng-show="ctrl.selectedItem">
+			<h1 class="text-center">Summary:</h1>
+			<div class="summary-row"><label>Employee:</label> {{ctrl.selectedItem.fname}} {{ctrl.selectedItem.lname}}</div>
+			<div class="summary-row"><label>Base Salary:</label> ${{ctrl.selectedItem.salary}}</div>
+			<div class="summary-row"><label>Total Annual Income Tax:</label> ${{ctrl.selectedItem.incomeTax}}</div>
+			<div class="summary-row"><label>Total Annual National Insurance:</label> ${{ctrl.selectedItem.insurance}}</div>
+			<div class="summary-row"><label>Total Annual Take Home Pay:</label> ${{ctrl.selectedItem.takeHome}}</div>
+		</div>
+	</div>
+
+	{{selectedEmployee}}
+</div>
